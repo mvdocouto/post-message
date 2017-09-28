@@ -1,0 +1,58 @@
+<html>
+<head>
+	<title>Iframe</title>
+</head>
+<body>
+	<h3>Formulario</h3>
+	<form method="" id="form-id">
+		<label></label>
+		<input type="text" name="texto" id="text-id" valeu="">	
+		<label></label>
+		<input type="text" name="texto" id="text-id" valeu="">
+		<input type="submit" name="send" id="send-button" value="Enviar">
+	</form>
+</body>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		const integratorHost = "http://localhost:8000";
+		
+		function startMessage(){
+			console.log("Verificando comunicacao");
+			var message = {"action": "ready"};
+			parent.postMessage(message, integratorHost)
+		}
+	    
+	    $("#form-id").submit(function( event ) {
+  			var text = $("#text-id").val();
+  			console.log("send text")
+  			message = {"text": text};
+  			parent.postMessage(message, integratorHost)
+  			event.preventDefault();
+		});
+
+	    function bla(){
+	    	return null;
+	    }
+
+		function listenerMessage(evt){
+			if (evt.origin !== integratorHost) {
+				return null;
+			}
+			if (evt.action.data == "") {
+				bla()
+			};
+			console.log(evt.data);
+		}
+
+		startMessage();
+		window.addEventListener("message", listenerMessage, false);
+
+
+	});
+</script>
+</html>
