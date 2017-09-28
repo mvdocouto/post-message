@@ -21,12 +21,6 @@
 			var message = {"action": "started"};
 			iframe.contentWindow.postMessage(message, 'http://localhost:8001');
 		}
-		// if (evt.origin !== "http://localhost:8001") {
-		// 	message = "Domain unatourizid";
-		// }else {
-		// 	message = evt.data;
-		// }
-		// document.getElementById("text-receiver").innerHTML = message;
 	}
 
 	window.addEventListener("message", listenerMessage, false);

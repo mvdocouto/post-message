@@ -4,11 +4,8 @@
 </head>
 <body>
 	<h3>Formulario</h3>
-	<form method="" id="form-id">
-		<label></label>
-		<input type="text" name="texto" id="text-id" valeu="">	
-		<label></label>
-		<input type="text" name="texto" id="text-id" valeu="">
+	<form method="">
+		<input type="text" name="texto" class="input-text" value="">	
 		<input type="submit" name="send" id="send-button" value="Enviar">
 	</form>
 </body>
@@ -18,38 +15,27 @@
   crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		const integratorHost = "http://localhost:8000";
-		
+	$( document ).ready(function() {
+		var parentHost = 'http://localhost:8000';
 		function startMessage(){
 			console.log("Verificando comunicacao");
 			var message = {"action": "ready"};
-			parent.postMessage(message, integratorHost)
+			parent.postMessage(message, parentHost)
 		}
-	    
-	    $("#form-id").submit(function( event ) {
-  			var text = $("#text-id").val();
-  			console.log("send text")
+	    startMessage();
+	    $("form").submit(function( event ) {
+  			var text = $(".input-text").val();
+  			console.log("Send text")
   			message = {"text": text};
-  			parent.postMessage(message, integratorHost)
+  			parent.postMessage(message, parentHost)
   			event.preventDefault();
 		});
-
-	    function bla(){
-	    	return null;
-	    }
-
 		function listenerMessage(evt){
-			if (evt.origin !== integratorHost) {
+			if (evt.origin !== parentHost) {
 				return null;
 			}
-			if (evt.action.data == "") {
-				bla()
-			};
 			console.log(evt.data);
 		}
-
-		startMessage();
 		window.addEventListener("message", listenerMessage, false);
 
 
