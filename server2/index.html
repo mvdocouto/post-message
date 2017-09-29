@@ -3,15 +3,16 @@
 	<title>Server 2</title>
 </head>
 <body>
-	<h1>Iframe Embeded</h1>
-	<iframe id="integrator" src="http://localhost:8001/"></iframe>
+	<h1>Site de vendas</h1>
+	<iframe id="integrator" src="http://localhost:8001/" style="display:none"></iframe>
 	<h2 id="text-receiver"></h2>
 </body>
 <script type="text/javascript">
 	
 	function listenerMessage(evt){
+		var clientHost = "http://localhost:8001";
 		iframe = document.getElementById('integrator');
-		if (evt.origin !== "http://localhost:8001") {
+		if (evt.origin !== clientHost) {
 			return null;
 		}
 		var message;
@@ -19,16 +20,9 @@
 		if(evt.data.action == "ready"){
 			console.log("Iniciando comunicacao");
 			var message = {"action": "started"};
-			iframe.contentWindow.postMessage(message, 'http://localhost:8001');
+			iframe.contentWindow.postMessage(message, clientHost);
 		}
 	}
-
 	window.addEventListener("message", listenerMessage, false);
-	// if (window.addEventListener){
-	// 	window.addEventListener("message", displayMessage, false);
-	// }else {
-	// 	window.attachEvent("onmessage", displayMessage);
-	// }
-
 </script>
 </html>
